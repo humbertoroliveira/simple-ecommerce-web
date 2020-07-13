@@ -15,11 +15,10 @@ class Newsletter extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // window.analytics.track("Newsletter Subscribed", {
-    //   email: this.state.emailValue,
-    // });
-    // TODO: emit event for when User has subscribed to our newsletter
-    // emailValue is @ this.state.emailValue
+    // TODO: Day 2.1
+    // Implement an “anonymous” identify (an identify without a userId) with an email trait
+    // .: emailValue is at this.state.emailValue
+    // Implement the event “Newsletter Subscription Started”
   };
 
   onNewsletterInputChange = (e) => {
