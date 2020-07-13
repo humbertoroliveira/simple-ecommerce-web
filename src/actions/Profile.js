@@ -4,7 +4,3 @@ export const setProfile = (profile) => async (dispatch, getState) => {
     payload: profile,
   });
 };
-
-export const getPId = () => (dispatch, getState) => {
-  return getState().Profile;
-};
