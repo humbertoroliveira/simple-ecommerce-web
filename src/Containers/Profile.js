@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { getProfile } from "../selectors/Profile";
 import { setProfile } from "../actions/Profile";
+import { browserHistory } from "react-router";
 import { Link } from "react-router";
 import btoa from "btoa";
 
@@ -62,7 +63,10 @@ class Profile extends React.Component {
       return;
     }
 
-    const userId = btoa(this.state.emailValue);
+    const userId = !this.props.userId
+      ? btoa(this.state.emailValue)
+      : this.props.userId;
+
     this.props.setProfile({
       email: this.state.emailValue,
       age: this.state.ageValue,
@@ -71,6 +75,8 @@ class Profile extends React.Component {
       isRegistered: true,
       userId,
     });
+
+    browserHistory.push("/");
 
     //TODO: Identify and consecutive event
   };
