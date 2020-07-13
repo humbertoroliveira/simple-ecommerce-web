@@ -1,4 +1,11 @@
-const initialState = { email: "email...", age: "30s" };
+const initialState = {
+  email: "",
+  age: "30s",
+  gender: "m",
+  country: "Brazil",
+  isRegistered: false,
+  userId: "",
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {

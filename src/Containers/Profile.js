@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getProfile } from "../selectors/Profile";
 import { setProfile } from "../actions/Profile";
 import { Link } from "react-router";
+import btoa from "btoa";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -11,11 +12,17 @@ class Profile extends React.Component {
     this.state = {
       emailValue: props.email,
       ageValue: props.age,
+      genderValue: props.gender,
+      countryValue: props.country,
+      isRegisteredValue: props.isRegistered,
+      message: "",
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onEmailInputChange = this.onEmailInputChange.bind(this);
     this.onAgeSelectChange = this.onAgeSelectChange.bind(this);
+    this.onGenderRadioChange = this.onGenderRadioChange.bind(this);
+    this.onCountrySelectChange = this.onCountrySelectChange.bind(this);
   }
 
   onEmailInputChange = (e) => {
@@ -32,15 +39,40 @@ class Profile extends React.Component {
     });
   };
 
+  onGenderRadioChange = (e) => {
+    const genderValue = e.target.value;
+    this.setState({
+      genderValue,
+    });
+  };
+
+  onCountrySelectChange = (e) => {
+    const countryValue = e.target.value;
+    this.setState({
+      countryValue,
+    });
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
-    this.setState({
-      emailValue: this.state.emailValue,
-    });
+    if (!this.state.emailValue) {
+      this.setState({
+        message: "Email is required",
+      });
+      return;
+    }
+
+    const userId = btoa(this.state.emailValue);
     this.props.setProfile({
       email: this.state.emailValue,
       age: this.state.ageValue,
+      country: this.state.countryValue,
+      gender: this.state.genderValue,
+      isRegistered: true,
+      userId,
     });
+
+    //TODO: Identify and consecutive event
   };
 
   render() {
@@ -53,7 +85,7 @@ class Profile extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                   <div className="form-row">
                     <div className="form-group col-md-3">
-                      <label htmlFor="email">Email</label>
+                      <label htmlFor="email">Email*</label>
                       <input
                         type="text"
                         className="form-control"
@@ -74,6 +106,8 @@ class Profile extends React.Component {
                             name="gender"
                             id="gender"
                             value="m"
+                            checked={this.state.genderValue === "m"}
+                            onChange={this.onGenderRadioChange}
                           />
                           <label className="form-check-label" htmlFor="gender">
                             Male
@@ -87,6 +121,8 @@ class Profile extends React.Component {
                             name="gender"
                             id="gender"
                             value="f"
+                            checked={this.state.genderValue === "f"}
+                            onChange={this.onGenderRadioChange}
                           />
                           <label className="form-check-label" htmlFor="gender">
                             Female
@@ -117,6 +153,8 @@ class Profile extends React.Component {
                     <div className="form-group col-md-3">
                       <label htmlFor="country">Country</label>
                       <select
+                        onChange={this.onCountrySelectChange}
+                        value={this.state.countryValue}
                         id="country"
                         name="country"
                         className="form-control"
@@ -427,8 +465,13 @@ class Profile extends React.Component {
                   <div className="form-row">
                     <div className="form-group col-md-3">
                       <button className="btn btn-primary">
-                        <span>Register</span>
+                        <span>
+                          {this.state.isRegisteredValue
+                            ? "Update Details"
+                            : "Register"}
+                        </span>
                       </button>
+                      <span> {this.state.message}</span>
                     </div>
                   </div>
                 </form>

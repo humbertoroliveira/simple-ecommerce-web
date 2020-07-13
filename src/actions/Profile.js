@@ -1,7 +1,10 @@
-export const setProfile = (profile) => (dispatch) => {
-  //TODO: implement identify + event for when customer updates their profile
+export const setProfile = (profile) => async (dispatch, getState) => {
   dispatch({
     type: "SET_PROFILE",
     payload: profile,
   });
+};
+
+export const getPId = () => (dispatch, getState) => {
+  return getState().Profile;
 };
