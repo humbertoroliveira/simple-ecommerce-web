@@ -133,6 +133,8 @@ export const cleanBasket = () => (dispatch) => {
 };
 
 export const basketCheckout = (phones) => () => {
-  //TODO: implement event for when User completed the order
+  // TODO: Day 3.1
+  // implement event for when User completed the order
+
   alert(JSON.stringify(phones));
 };
