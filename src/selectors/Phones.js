@@ -35,7 +35,10 @@ export const getTotalBasketPrice = (state) => {
   const phones = R.map((id) => getPhonesById(state, id), state.Basket);
   let total = 0;
   return phones.reduce((total, phone) => {
-    return Math.round((total + phone.price) * state.Coupon * 100) / 100;
+    return (
+      Math.round((total + phone.price) * state.Coupon.invertedDiscount * 100) /
+      100
+    );
   }, total);
 };
 

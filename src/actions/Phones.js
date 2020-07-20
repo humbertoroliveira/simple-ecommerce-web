@@ -6,10 +6,10 @@ import {
 } from "../api/fetchPhones";
 import { getRenderedPhonesLength } from "../selectors/Phones";
 
-export const applyDiscount = (percent) => (dispatch) => {
+export const applyDiscount = (invertedDiscount, code) => (dispatch) => {
   dispatch({
     type: "APPLY_COUPON_CODE",
-    payload: percent,
+    payload: { invertedDiscount, code },
   });
 };
 
@@ -101,8 +101,9 @@ export const fetchPhoneById = (id) => {
 };
 
 export const addPhoneToBasket = (id) => (dispatch) => {
-  //window.analytics.track("Product Added");
-  //TODO: implement event for when customer adds product to the basket
+  // TODO: Day 2.2
+  // Implement a track() for “Product Added”. Property: product_id.
+
   dispatch({
     type: "ADD_PHONE_TO_BASKET",
     payload: id,
@@ -119,7 +120,8 @@ export const searchPhone = (text) => (dispatch) => {
 };
 
 export const removePhoneFromBasket = (id) => async (dispatch) => {
-  //TODO: implement event for when User removed a product from their shopping cart
+  // TODO: Day 2.2
+
   dispatch({
     type: "REMOVE_PHONE_FROM_BASKET",
     payload: id,
@@ -132,9 +134,13 @@ export const cleanBasket = () => (dispatch) => {
   });
 };
 
-export const basketCheckout = (phones) => () => {
-  // TODO: Day 3.1
-  // implement event for when User completed the order
+export const basketCheckout = (phones) => (dispatch, getState) => {
+  const revenue = phones.reduce((a, b) => a + (b.price || 0), 0);
+  const couponCode = getState().Coupon.code;
+  // TODO: Day 2.2
+  // Implement a track() for “Order Completed”. Properties: revenue and coupon.
+  // .: revenue and couponCode are just above these comments
 
+  debugger;
   alert(JSON.stringify(phones));
 };

@@ -1,4 +1,4 @@
-const initialState = 1;
+const initialState = { invertedDiscount: 1, code: "" };
 
 export default (state = initialState, action) => {
   switch (action.type) {
