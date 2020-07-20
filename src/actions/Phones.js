@@ -135,12 +135,15 @@ export const cleanBasket = () => (dispatch) => {
 };
 
 export const basketCheckout = (phones) => (dispatch, getState) => {
-  const revenue = phones.reduce((a, b) => a + (b.price || 0), 0);
-  const couponCode = getState().Coupon.code;
+  const { code: coupon, invertedDiscount } = getState().Coupon;
+  const revenue = phones.reduce(
+    (a, b) => a + (b.price * invertedDiscount || 0),
+    0
+  );
+
   // TODO: Day 2.2
   // Implement a track() for “Order Completed”. Properties: revenue and coupon.
-  // .: revenue and couponCode are just above these comments
+  // .: revenue and coupon variables are already initialised for you
 
-  debugger;
   alert(JSON.stringify(phones));
 };
