@@ -33,13 +33,10 @@ export const getRenderedPhonesLength = (state) =>
 
 export const getTotalBasketPrice = (state) => {
   const phones = R.map((id) => getPhonesById(state, id), state.Basket);
-  let total = 0;
-  return phones.reduce((total, phone) => {
-    return (
-      Math.round((total + phone.price) * state.Coupon.invertedDiscount * 100) /
-      100
-    );
-  }, total);
+  return phones.reduce(
+    (a, b) => a + (b.price * state.Coupon.invertedDiscount || 0),
+    0
+  );
 };
 
 export const getTotalBasketCount = (state) => {
