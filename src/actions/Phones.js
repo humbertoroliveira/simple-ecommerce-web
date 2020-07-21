@@ -120,8 +120,6 @@ export const searchPhone = (text) => (dispatch) => {
 };
 
 export const removePhoneFromBasket = (id) => async (dispatch) => {
-  // TODO: Day 2.2
-
   dispatch({
     type: "REMOVE_PHONE_FROM_BASKET",
     payload: id,
